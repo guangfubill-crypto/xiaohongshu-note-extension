@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>小红书笔记采集助手</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="popup-body">
+  <main class="popup-shell">
+    <header class="brand-header">
+      <div class="brand-mark">小</div>
+      <div>
+        <h1>小红书笔记采集助手</h1>
+        <p>真实浏览器采集 · 数据只保存在本机</p>
+      </div>
+    </header>
+
+    <section class="panel compact-panel keyword-panel">
+      <h2>输入关键词找笔记</h2>
+      <p class="muted">自动搜索、向下滚动加载，再补采前若干笔记详情。</p>
+      <label for="keyword">笔记关键词</label>
+      <input id="keyword" type="search" placeholder="例如：淋浴房">
+      <div class="form-row three-cols">
+        <label>滚动轮次
+          <input id="scrollRounds" type="number" min="1" max="10" value="2">
+        </label>
+        <label>详情数量
+          <input id="detailLimit" type="number" min="0" max="50" value="5">
+        </label>
+        <label>间隔（秒）
+          <input id="delaySeconds" type="number" min="5" max="60" value="12">
+        </label>
+      </div>
+      <label class="check-row">
+        <input id="autoDownload" type="checkbox" checked>
+        <span>采集完成后把正文、图片和可获取视频打成一个 ZIP</span>
+      </label>
+      <button id="startKeyword" class="primary full">开始找相关笔记</button>
+    </section>
+
+    <section class="panel compact-panel">
+      <h2>批量笔记链接</h2>
+      <label for="urlItems">每行一个完整链接，请保留 xsec_token</label>
+      <textarea id="urlItems" rows="3" placeholder="https://www.xiaohongshu.com/search_result/...?xsec_token=..."></textarea>
+      <button id="startUrls" class="primary full">开始批量采集</button>
+      <div class="button-row">
+        <button id="pauseTask" class="secondary">暂停</button>
+        <button id="resumeTask" class="secondary">继续</button>
+        <button id="stopTask" class="danger">停止</button>
+      </div>
+    </section>
+
+    <section class="panel compact-panel">
+      <h2>当前页面</h2>
+      <p class="muted">支持小红书搜索页和笔记详情页。</p>
+      <button id="downloadCurrent" class="primary full">采集当前页并下载一个 ZIP</button>
+      <div class="button-row two-cols">
+        <button id="captureCurrent" class="secondary">仅采集当前页</button>
+        <button id="openDashboard" class="secondary">打开分析看板</button>
+      </div>
+      <button id="openStudio" class="secondary full">发布与评论助手</button>
+    </section>
+
+    <section class="status-card" aria-live="polite">
+      <div class="status-line">
+        <span id="statusDot" class="status-dot idle"></span>
+        <strong id="statusTitle">准备就绪</strong>
+        <span id="statusProgress">0/0</span>
+      </div>
+      <p id="statusMessage">输入关键词即可开始。</p>
+      <div class="progress-track"><div id="progressBar" class="progress-bar"></div></div>
+    </section>
+  </main>
+  <script src="popup.js"></script>
+</body>
+</html>

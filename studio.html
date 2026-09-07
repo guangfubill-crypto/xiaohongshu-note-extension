@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>小红书发布与评论助手</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="studio-body">
+  <header class="studio-header">
+    <div>
+      <p class="eyebrow">SAFE PUBLISHING ASSISTANT</p>
+      <h1>发布与评论助手</h1>
+      <p>自动填充，人工确认发布；不批量刷评论，不使用站外导流话术。</p>
+    </div>
+    <button id="openDashboard" class="secondary">返回分析看板</button>
+  </header>
+
+  <main class="studio-main">
+    <section class="panel studio-panel">
+      <div class="section-heading">
+        <div><span class="step-badge">01</span><h2>笔记草稿</h2></div>
+        <span id="draftSaved" class="save-state">本地自动保存</span>
+      </div>
+      <label>标题（建议 20 字以内）
+        <input id="draftTitle" maxlength="100" placeholder="输入真实、具体的标题">
+      </label>
+      <label>正文
+        <textarea id="draftBody" rows="14" maxlength="3000" placeholder="每段 1—3 行，写清真实体验、步骤或结论"></textarea>
+      </label>
+      <label>标签（用空格分隔）
+        <input id="draftTags" maxlength="300" placeholder="#淋浴房 #卫生间装修 #装修经验">
+      </label>
+      <label class="check-row">
+        <input id="commercialDraft" type="checkbox">
+        <span>这是品牌合作、赠品或返现相关内容（请确认已经完成平台要求的商业报备）</span>
+      </label>
+      <div id="draftReview" class="review-box neutral">等待检查</div>
+      <div class="studio-actions">
+        <button id="reviewDraft" class="secondary">合规检查</button>
+        <button id="preparePublish" class="primary">打开发布页并自动填充</button>
+      </div>
+      <p class="safe-note">图片或视频仍由你在官方发布页选择。扩展不会点击最终“发布”按钮。</p>
+    </section>
+
+    <section class="panel studio-panel">
+      <div class="section-heading">
+        <div><span class="step-badge">02</span><h2>评论助手</h2></div>
+        <span id="commentQuota" class="save-state">今日 0/10</span>
+      </div>
+      <label>目标笔记链接
+        <input id="commentUrl" type="url" placeholder="粘贴完整小红书笔记链接；从笔记页打开助手时会自动带入">
+      </label>
+      <label>谨慎话术模板
+        <select id="commentTemplate">
+          <option value="">选择后再补充真实细节</option>
+          <option value="这个角度很实用，尤其是【补充具体细节】这部分。谢谢分享。">具体感谢</option>
+          <option value="我也遇到过类似情况，我这边的真实体验是【补充真实经历】，不同情况可能会有差异。">经验补充</option>
+          <option value="想请教一个具体问题：【填写与内容有关的问题】？方便时再回复就好。">具体提问</option>
+          <option value="谢谢你的反馈。关于【填写问题】，我的实际情况是【填写真实答复】，供你参考。">回复自己的评论区</option>
+        </select>
+      </label>
+      <label>评论内容
+        <textarea id="commentText" rows="6" maxlength="180" placeholder="必须结合当前笔记写具体内容，不能复制模板直接发送"></textarea>
+      </label>
+      <div id="commentReview" class="review-box neutral">评论会拦截导流、承诺、诱导互动、功效词和攻击性表达</div>
+      <div class="studio-actions">
+        <button id="reviewComment" class="secondary">检查评论</button>
+        <button id="prepareComment" class="primary">打开笔记并填入评论框</button>
+      </div>
+      <p class="safe-note">最多准备 10 条/天，同一话术不得重复，相邻两次至少间隔 5 分钟；最终发送由你确认。</p>
+    </section>
+  </main>
+  <script src="safety.js"></script>
+  <script src="studio.js"></script>
+</body>
+</html>

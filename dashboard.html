@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>小红书笔记分析看板</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="dashboard-body">
+  <header class="dashboard-header">
+    <div>
+      <p class="eyebrow">XIAOHONGSHU NOTE INTELLIGENCE</p>
+      <h1>小红书笔记分析看板</h1>
+      <p class="muted">公开页面数据 · 本地存储 · 无需付费 API</p>
+    </div>
+    <div class="header-actions">
+      <button id="openStudio" class="secondary">发布与评论助手</button>
+      <button id="refreshData" class="secondary">刷新</button>
+      <button id="downloadVisible" class="secondary">打包筛选结果（一个 ZIP）</button>
+      <button id="exportCsv" class="primary">导出 CSV</button>
+    </div>
+  </header>
+
+  <main class="dashboard-main">
+    <section class="metric-grid">
+      <article class="metric-card"><span>笔记数</span><strong id="metricNotes">0</strong><small>去重笔记</small></article>
+      <article class="metric-card"><span>平均点赞</span><strong id="metricLikes">—</strong><small>有效互动数据</small></article>
+      <article class="metric-card"><span>收藏总量</span><strong id="metricCollects">0</strong><small>已补采详情</small></article>
+      <article class="metric-card"><span>评论总量</span><strong id="metricComments">0</strong><small>已补采详情</small></article>
+    </section>
+
+    <section class="panel dashboard-panel">
+      <div class="toolbar">
+        <input id="searchInput" type="search" placeholder="搜索标题、正文、作者、标签或笔记 ID">
+        <select id="keywordFilter"><option value="">全部来源关键词</option></select>
+        <select id="sortBy">
+          <option value="searchRank-asc">搜索排名</option>
+          <option value="lastSeen-desc">最近采集</option>
+          <option value="likes-desc">点赞数从高到低</option>
+          <option value="collects-desc">收藏数从高到低</option>
+          <option value="comments-desc">评论数从高到低</option>
+        </select>
+        <button id="clearData" class="danger ghost">清空数据</button>
+      </div>
+
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th>笔记</th>
+              <th>来源关键词</th>
+              <th>作者</th>
+              <th>点赞</th>
+              <th>收藏</th>
+              <th>评论</th>
+              <th>标签</th>
+              <th>发布时间/IP</th>
+              <th>内容形式</th>
+              <th>媒体文件</th>
+              <th>更新时间</th>
+              <th>操作</th>
+            </tr>
+          </thead>
+          <tbody id="noteRows"></tbody>
+        </table>
+        <div id="emptyState" class="empty-state">
+          <div class="empty-icon">小</div>
+          <h2>还没有笔记数据</h2>
+          <p>点击扩展图标，输入关键词开始采集。</p>
+        </div>
+      </div>
+      <footer class="table-footer">
+        <span id="rowCount">显示 0 篇笔记</span>
+        <span id="downloadStatus"></span>
+      </footer>
+    </section>
+  </main>
+  <script src="dashboard.js"></script>
+</body>
+</html>
