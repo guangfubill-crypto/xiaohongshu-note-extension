@@ -1,142 +1,142 @@
-# 小红书笔记采集、归档与发布助手
+# Xiaohongshu Note Collector, Archive & Publishing Assistant
 
-**Language:** [English](README_EN.md) · 中文
+**Language:** English · [中文](README_ZH.md)
 
-一个纯 Chrome/Edge Manifest V3 浏览器扩展，用真实浏览器页面采集小红书公开笔记，并将正文、图片和可访问视频一次性归档为 ZIP。
+A pure Chrome/Edge Manifest V3 browser extension for collecting public Xiaohongshu notes through the real browser, then archiving text, images, and accessible videos into a single ZIP file.
 
-扩展还提供本地草稿、发布页自动填充和评论辅助功能。它不会代替用户点击最终的“发布”或“发送”，也不提供无人值守群发、自动点赞关注或站外导流。
+It also provides local drafts, publishing-page autofill, and cautious comment assistance. The extension never clicks the final “Publish” or “Send” button for you, and it does not provide unattended bulk posting, automated likes/follows, or off-platform promotion.
 
 [![Latest Release](https://img.shields.io/github/v/release/guangfubill-crypto/xiaohongshu-note-extension?display_name=tag)](https://github.com/guangfubill-crypto/xiaohongshu-note-extension/releases)
 [![License](https://img.shields.io/github/license/guangfubill-crypto/xiaohongshu-note-extension)](LICENSE)
 
-## 功能概览
+## Features
 
-- 输入关键词，打开小红书搜索页并滚动加载公开笔记
-- 使用搜索结果中的完整链接补采详情，支持正文、作者、互动数据、标签、发布时间和 IP 属地等字段
-- 图片、视频和 Markdown 正文打成一个 ZIP，只触发一次浏览器下载
-- 识别播放器为 `blob:`、但页面 `og:video` 提供签名 MP4 的视频笔记
-- 本地分析看板：搜索、筛选、排序、CSV 导出和单篇/批量归档
-- 发布助手：草稿本地保存、标题/正文/标签检查、官方发布页自动填充
-- 评论助手：谨慎话术模板、导流/承诺/功效/攻击性表达检查、重复和频率限制
+- Search Xiaohongshu by keyword and scroll through public notes
+- Collect note details from complete result URLs, including title, body, author, engagement counts, tags, date, and visible IP location
+- Download Markdown, images, and accessible videos as one ZIP archive
+- Detect notes whose player only exposes a `blob:` URL but whose page provides a signed MP4 through `og:video`
+- Local dashboard with search, filtering, sorting, CSV export, and single/batch archiving
+- Publishing assistant with local drafts, text checks, and official creator-page autofill
+- Comment assistant with cautious templates, risk checks, duplicate detection, and rate limits
 
-## 安装
+## Installation
 
-### 直接下载
+### Download
 
-从 [Releases](https://github.com/guangfubill-crypto/xiaohongshu-note-extension/releases) 下载最新 ZIP，例如 [v0.4.0](https://github.com/guangfubill-crypto/xiaohongshu-note-extension/releases/tag/v0.4.0)。
+Download the latest ZIP from [Releases](https://github.com/guangfubill-crypto/xiaohongshu-note-extension/releases), for example [v0.4.0](https://github.com/guangfubill-crypto/xiaohongshu-note-extension/releases/tag/v0.4.0).
 
-### 加载扩展
+### Load the extension
 
-1. 解压 ZIP。
-2. Chrome 打开 `chrome://extensions/`；Edge 打开 `edge://extensions/`。
-3. 开启右上角“开发者模式”。
-4. 点击“加载已解压的扩展程序”。
-5. 选择包含 `manifest.json` 的扩展文件夹。
-6. 建议把扩展固定到浏览器工具栏。
+1. Extract the ZIP file.
+2. Open `chrome://extensions/` in Chrome or `edge://extensions/` in Edge.
+3. Enable **Developer mode**.
+4. Click **Load unpacked**.
+5. Select the folder that contains `manifest.json`.
+6. Pin the extension to the browser toolbar if useful.
 
-首次使用前，请在同一个浏览器中正常登录 [小红书](https://www.xiaohongshu.com/)。扩展复用当前浏览器的登录状态，不读取或导出 Cookie。
+Before first use, sign in to [Xiaohongshu](https://www.xiaohongshu.com/) in the same browser. The extension reuses the current browser session and does not read or export cookies.
 
-## 采集笔记
+## Collect notes
 
-### 关键词采集
+### Keyword collection
 
-1. 点击扩展图标，输入关键词，例如“淋浴房”。
-2. 设置滚动轮次、详情数量和请求间隔。
-3. 点击“开始找相关笔记”。
-4. 采集完成后，在分析看板中搜索、筛选、排序或导出 CSV。
+1. Click the extension icon and enter a keyword, such as `shower room` or `淋浴房`.
+2. Choose scroll rounds, detail count, and request interval.
+3. Click **Start keyword collection**.
+4. When finished, use the dashboard to search, filter, sort, or export CSV.
 
-详情数量设为 `0` 时只保存搜索结果，不进入详情页。建议使用合理间隔，页面出现安全验证时暂停并按页面提示人工处理。
+Set the detail count to `0` to save search results without opening detail pages. Use a reasonable interval and pause for any security verification shown by the site.
 
-### 批量链接采集
+### Batch URL collection
 
-每行粘贴一个完整的小红书笔记链接。详情读取依赖链接中的 `xsec_token`，不要只粘贴裸笔记 ID，也不要删除链接参数。
+Paste one complete Xiaohongshu note URL per line. Detail collection relies on the `xsec_token` in the URL; do not paste only a bare note ID or remove the URL parameters.
 
-### 单篇采集
+### Single-note collection
 
-打开任意小红书笔记详情页，点击扩展中的“采集当前页并下载一个 ZIP”。
+Open a Xiaohongshu note detail page and click **Collect current page and download one ZIP** in the extension popup.
 
-## ZIP 归档结构
+## ZIP structure
 
-整批内容只下载一个 ZIP。文件夹使用笔记标题，非法文件名字符会被替换；同名笔记会自动追加短 ID 防止覆盖。
+Each collection task creates one ZIP. Note titles are used as folders; invalid filename characters are replaced, and duplicate titles receive a short ID suffix.
 
 ```text
-小红书归档.zip
-└── 小红书归档/
-    └── 笔记标题/
-        ├── 笔记标题.md
+xiaohongshu-archive.zip
+└── xiaohongshu-archive/
+    └── Note title/
+        ├── Note title.md
         ├── 1.webp
         ├── 2.webp
         └── 3.mp4
 ```
 
-媒体按页面提取顺序编号，图片和视频合并为同一组序号。播放器只有临时 `blob:` 地址、页面也没有可访问媒体 URL 时，扩展不会绕过访问控制；如果页面提供 `og:video` 签名 MP4，则会优先使用该地址。
+Media files are numbered in extraction order, with images and videos sharing the same sequence. The extension does not bypass protected streams. If a page exposes a signed MP4 through `og:video`, that URL is preferred.
 
-## 发布助手
+## Publishing assistant
 
-点击扩展弹窗或分析看板中的“发布与评论助手”。
+Open **Publishing & Comment Assistant** from the popup or dashboard.
 
-1. 填写标题、正文和标签，草稿自动保存在本机。
-2. 点击“合规检查”。
-3. 点击“打开发布页并自动填充”。
-4. 在小红书官方发布页上传自己的图片或视频。
-5. 如果编辑框尚未出现，点击页面右侧“填入扩展草稿”。
-6. 人工核对图片、话题、商业披露和正文，再点击最终“发布”。
+1. Enter a title, body, and tags. Drafts are saved locally in the browser.
+2. Click **Compliance check**.
+3. Click **Open publishing page and autofill**.
+4. Upload your own images or videos on the official Xiaohongshu publishing page.
+5. If the editor is not ready, click **Fill extension draft** in the assistant panel on the page.
+6. Review the media, topics, commercial disclosure, and text, then click **Publish** yourself.
 
-扩展只负责填充编辑框，不会自动点击最终发布按钮。商业合作、赠品或返现内容请先确认平台要求的报备和披露义务。
+The extension only fills editor fields. It does not click the final publishing button. For sponsored, gifted, or incentivized content, verify the platform’s disclosure and reporting requirements first.
 
-## 评论助手
+## Comment assistant
 
-评论模板包含“具体感谢、经验补充、具体提问、回复自己的评论区”等场景。模板中的占位符必须替换为与当前笔记相关的真实细节。
+Comment templates cover specific thanks, experience additions, concrete questions, and replies to comments on your own posts. Replace every template placeholder with a real detail related to the current note.
 
-通过检查后，扩展会打开目标笔记并填入评论框，但不会自动发送。
+After passing the checks, the extension opens the target note and fills the comment box. It does not send the comment automatically.
 
-默认保护规则：
+Default safeguards:
 
-- 每天最多准备 10 条评论
-- 相邻两次至少间隔 5 分钟
-- 近期相似度过高的话术会被拒绝
-- 站外联系方式、加群、二维码、收益承诺、互赞互关、医疗功效和攻击性表达会阻止填入
+- At most 10 prepared comments per day
+- At least 5 minutes between preparations
+- Highly similar recent comments are rejected
+- Off-platform contact details, group invitations, QR codes, earnings promises, engagement exchange, medical claims, and attacks are blocked
 
-## 合规边界
+## Safety and compliance boundaries
 
-扩展按“辅助创作和页面填充”设计，不按“无人值守运营”设计：
+This extension is designed for assisted writing and page filling, not unattended account operation:
 
-- 不自动发布、不批量群发评论
-- 不自动点赞、关注、私信或互刷互动
-- 不提供微信、二维码、群号、外链等导流能力
-- 不绕过验证码、登录、访问控制或平台安全机制
-- 不导出 Cookie，不使用代理池或反检测方案
-- 不编造亲身体验、数据或效果，不把个例包装成普遍承诺
+- No unattended publishing or bulk comment distribution
+- No automated likes, follows, private messages, or engagement exchange
+- No WeChat, QR code, group number, or external-link promotion features
+- No CAPTCHA, login, access-control, or platform-security bypasses
+- No cookie export, proxy pools, stealth mode, or anti-detection features
+- No fabricated personal experience, metrics, or universal claims
 
-请只保存和使用你有权处理的内容，并自行确认使用方式符合平台规则、著作权要求和所在地法律。
+Only save and use content you are authorized to handle. You are responsible for following platform rules, copyright requirements, and applicable laws.
 
-## 本地数据与权限
+## Local data and permissions
 
-数据默认保存在浏览器的 `chrome.storage.local`，不会上传到本项目服务器。
+Data is stored in `chrome.storage.local` and is not uploaded to a project server.
 
-| 权限 | 用途 |
+| Permission | Purpose |
 | --- | --- |
-| `storage` / `unlimitedStorage` | 保存笔记、草稿、归档任务和评论辅助记录 |
-| `tabs` | 打开搜索页、详情页、发布页和评论目标页 |
-| `alarms` | 控制采集间隔和任务进度 |
-| `downloads` | 一次性保存 ZIP |
-| 小红书及 CDN 网页权限 | 读取当前页面公开内容和可访问媒体 |
+| `storage` / `unlimitedStorage` | Store notes, drafts, archive jobs, and comment-assistant records |
+| `tabs` | Open search pages, detail pages, publishing pages, and comment targets |
+| `alarms` | Control collection intervals and task progress |
+| `downloads` | Save the single ZIP archive |
+| Xiaohongshu and CDN host permissions | Read visible page content and accessible media |
 
-扩展不需要 CLI、服务器或付费 API。
+The extension does not require a CLI, server, or paid API.
 
-## 已知限制
+## Known limitations
 
-- 小红书页面结构会变化，个别实验页面可能出现字段为空或填充失败。
-- 搜索结果是动态瀑布流，相同关键词和滚动次数不保证结果完全一致。
-- 视频需要页面提供可访问的 MP4 或其他直接媒体地址；不会抓取受保护的临时流。
-- ZIP 在浏览器内存中生成，包含很多大视频时建议每批控制在 5 篇左右。
-- 内容下载可能受著作权和平台规则保护，不包含去水印功能。
+- Xiaohongshu changes its page structure frequently; some experimental layouts may leave fields empty or prevent autofill.
+- Search results are dynamic, so the same keyword and scroll count may not produce identical results.
+- Videos require a directly accessible MP4 or other media URL; protected temporary streams are not bypassed.
+- ZIP files are assembled in browser memory. For many large videos, process roughly five notes per batch.
+- Downloaded content may be protected by copyright or platform rules; watermark removal is not provided.
 
-## 开发与本地验证
+## Development
 
-项目是无构建步骤的 Manifest V3 扩展，修改文件后可在扩展管理页面点击“重新加载”。
+This is a no-build Manifest V3 extension. After editing files, click **Reload** on the browser extensions page.
 
-提交前建议检查：
+Basic syntax checks:
 
 ```powershell
 node --check background.js
@@ -145,6 +145,6 @@ node --check safety.js
 node --check studio.js
 ```
 
-## 许可证
+## License
 
 [MIT License](LICENSE)
